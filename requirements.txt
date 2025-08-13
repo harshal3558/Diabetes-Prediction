@@ -6,3 +6,6 @@ seaborn
 xgboost
 lightgbm
 statsmodels
+python-dotenv
+pymysql
+mysql-connector-python
