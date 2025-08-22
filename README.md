@@ -47,6 +47,9 @@ A well-written README.md file is crucial for any project, as it serves as the fi
     - pymysql: MySQL database client.
     - mysql-connector-python: Official MySQL connector.
 
+    - Dagshub
+    - MySQL
+
 - **Configuration**
   - Mention any environment variables, API keys, database setup, or configuration files required before running the project.
 

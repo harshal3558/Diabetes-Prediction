@@ -9,3 +9,5 @@ statsmodels
 python-dotenv
 pymysql
 mysql-connector-python
+
+-e .

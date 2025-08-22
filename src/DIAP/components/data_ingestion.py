@@ -23,8 +23,8 @@ class DataIngestion:
     def initiate_data_ingestion(self):
         try:
             # reading from mysql
-            # df=read_sql_data()
-            df=pd.read_csv(os.path.join('notebook/data','raw.csv'))
+            df=read_sql_data()
+            # df=pd.read_csv(r'data\raw\diabetes.csv')
             logging.info('Reading completed mysql database')
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
@@ -46,6 +46,10 @@ class DataIngestion:
         except Exception as e:
             raise CustomException(e,sys)
         
+        
+if __name__ == "__main":
+    obj = DataIngestion()
+    obj.initiate_data_ingestion()
 
 # # app.py
 # from src.CCDP.logger import logging
