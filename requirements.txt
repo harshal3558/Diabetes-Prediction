@@ -7,10 +7,11 @@ catboost
 xgboost
 Flask
 dill
-mlflow
+mlflow == 2.8
 lightgbm
 python-dotenv
 pymysql
 mysql-connector-python
+dagshub
 
 -e .
