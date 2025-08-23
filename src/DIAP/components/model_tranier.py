@@ -2,10 +2,10 @@ import os
 import sys
 from dataclasses import dataclass
 from urllib.parse import urlparse
-import mlflow
-import mlflow.sklearn
+# import mlflow
+# import mlflow.sklearn
 import numpy as np
-import dagshub
+# import dagshub
 
 
 # Importing classification model
@@ -58,7 +58,7 @@ class ModelTrainer:
                 'KNN':KNeighborsClassifier(),
                 'Decision Tree':DecisionTreeClassifier(),
                 'Random Forest':RandomForestClassifier(),
-                # 'SVC':SVC(),
+                'SVC':SVC(),
                 # 'lightgbm':LGBMClassifier(),
             }
             params={
@@ -103,11 +103,11 @@ class ModelTrainer:
                     # 'min_samples_split': [2, 5],
                     # 'min_samples_leaf': [1, 2]
                 },
-                # "SVC":{
+                "SVC":{
                     # 'C': [0.1, 1, 10],
                     # 'kernel': ['linear', 'rbf'],
                     # 'gamma': ['scale', 'auto']
-                # },
+                },
                 # "lightgbm":{
                 #     'learning_rate': [0.01, 0.05, 0.1],
                 #     'n_estimators': [100, 200],
@@ -148,37 +148,37 @@ class ModelTrainer:
             best_params = params[actual_model]
 
             # dagshub.init(repo_owner='harshal3558', repo_name='ML-Project', mlflow=True)
-            mlflow.set_registry_uri("https://dagshub.com/harshal3558/Credit-Card-Default-Prediction.mlflow")
-            tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
+            # mlflow.set_registry_uri("https://dagshub.com/harshal3558/Credit-Card-Default-Prediction.mlflow")
+            # tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
             # mlflow
 
             # import dagshub
-            dagshub.init(repo_owner='harshal3558', repo_name='Credit-Card-Default-Prediction', mlflow=True)
-            with mlflow.start_run():
+            # dagshub.init(repo_owner='harshal3558', repo_name='Credit-Card-Default-Prediction', mlflow=True)
+            # with mlflow.start_run():
 
-                predicted_qualities = best_model.predict(X_test)
+                # predicted_qualities = best_model.predict(X_test)
 
-                (accuracy, precision, f1) = self.eval_metrics(y_test, predicted_qualities)
+                # (accuracy, precision, f1) = self.eval_metrics(y_test, predicted_qualities)
 
-                mlflow.log_params(best_params)
+                # mlflow.log_params(best_params)
 
-                mlflow.log_metric("accuracy", accuracy)
-                mlflow.log_metric("precision", precision)
-                mlflow.log_metric("f1", f1)
+                # mlflow.log_metric("accuracy", accuracy)
+                # mlflow.log_metric("precision", precision)
+                # mlflow.log_metric("f1", f1)
                 # mlflow.log_metric('recall',recall)
 
 
                 # Model registry does not work with file store
-                if tracking_url_type_store != "file":
+                # if tracking_url_type_store != "file":
 
                     # Register the model
                     # There are other ways to use the Model Registry, which depends on the use case,
                     # please refer to the doc for more information:
                     # https://mlflow.org/docs/latest/model-registry.html#api-workflow
-                    mlflow.sklearn.log_model(best_model, "model", registered_model_name=actual_model)
-                else:
-                    mlflow.sklearn.log_model(best_model, "model")
+                    # mlflow.sklearn.log_model(best_model, "model", registered_model_name=actual_model)
+                # else:
+                    # mlflow.sklearn.log_model(best_model, "model")
 
 
             if best_model_score<0.6:
@@ -193,6 +193,8 @@ class ModelTrainer:
             predicted=best_model.predict(X_test)
 
             acc_score = accuracy_score(y_test, predicted)
+            class_report = classification_report(y_test, predicted)
+            con_mat = confusion_matrix(y_test, predicted)
             return acc_score
 
 
