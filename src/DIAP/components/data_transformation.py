@@ -27,7 +27,7 @@ class DataTransformation:
 
             # numerical_columns=[col for col in df.columns if df[col].dtype != "O"]
             # logging.info('Numerical columns are:',numerical_columns)
-            numerical_columns=['ID', 'LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE', 'PAY_0', 'PAY_2', 'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6', 'BILL_AMT1', 'BILL_AMT2', 'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1', 'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']
+            numerical_columns=['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age']
             # categorical_columns=[col for col in df.columns if df[col].dtype == "O"]
             # logging.info('Categorical Columns are:',categorical_columns)
 
@@ -68,8 +68,8 @@ class DataTransformation:
 
             preprocessing_obj=self.get_data_transformation_object()
 
-            target_column_name='default.payment.next.month'
-            numerical_column=['ID', 'LIMIT_BAL', 'SEX', 'EDUCATION', 'MARRIAGE', 'AGE', 'PAY_0', 'PAY_2', 'PAY_3', 'PAY_4', 'PAY_5', 'PAY_6', 'BILL_AMT1', 'BILL_AMT2', 'BILL_AMT3', 'BILL_AMT4', 'BILL_AMT5', 'BILL_AMT6', 'PAY_AMT1', 'PAY_AMT2', 'PAY_AMT3', 'PAY_AMT4', 'PAY_AMT5', 'PAY_AMT6']
+            target_column_name='Outcome'
+            numerical_column=['Pregnancies','Glucose','BloodPressure','SkinThickness','Insulin','BMI','DiabetesPedigreeFunction','Age']
 
             ## divide the train dataset to idependent and dependent feature
 
