@@ -1,17 +1,20 @@
-pandas
-numpy
-seaborn
-matplotlib
-scikit-learn
-catboost
-xgboost
-Flask
-dill
+pandas == 2.3.3
+numpy == 1.26.4
+seaborn == 0.13.2
+matplotlib == 3.10.7
+scikit-learn == 1.7.2 
+# catboost
+xgboost == 3.0.5
+Flask == 3.1.2
+dill == 0.4.0
 mlflow == 2.8
-lightgbm
-python-dotenv
-pymysql
-mysql-connector-python
-dagshub
+lightgbm == 4.6.0
+python-dotenv == 1.1.1
+pymysql == 1.1.2
+mysql-connector-python == 9.4.0
+dagshub == dagshub-0.6.3
+# catboost==1.2.5
+# scikit-learn==1.5.2
 
--e .
+
+# -e .

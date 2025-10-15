@@ -1,0 +1,113 @@
+# Python bytecode, cache, and compiled extensions
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+
+# Distribution and packaging
+.Python
+build/
+dist/
+downloads/
+develop-eggs/
+eggs/
+.eggs/
+*.egg-info/
+.installed.cfg
+*.egg
+sdist/
+parts/
+var/
+
+# Installer and pip logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+env/
+venv/
+.venv/
+.denv/
+denv/
+
+# Coverage, test, and log files
+*.cover
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+htmlcov/
+.tox/
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
+*.log
+*.tmp
+
+# Version control and CI/CD
+.git
+.gitignore
+.gitattributes
+.dvc
+.hg
+.svn
+.codeclimate.yml
+.travis.yml
+.taskcluster.yml
+
+# Docker files not needed in image
+Dockerfile
+docker-compose.yml
+.docker
+.dockerignore
+
+# Editor and IDE folders/files
+.idea/
+.vscode/
+.ropeproject
+**/.ropeproject
+*.swp
+
+# OS-generated files
+.DS_Store
+
+# Node.js
+node_modules/
+
+# Credentials, secrets, and environment files
+.env
+*.env
+.aws
+.ssh
+
+# Documentation and builds
+docs/_build/
+
+# PyInstaller files
+*.manifest
+*.spec
+target/
+
+# Platform-specifics
+.ebextensions
+
+# Byte-compiled/optimized binaries
+*.so
+
+# Exclusion patterns (uncomment and adapt as needed)
+# !src/
+# !requirements.txt
+# !main.py
+logs/
+notebook/
+.dvcignore
+.env
+setup.py
+template.py
+DIAP.edd-info/
+~$w_Level_Design__DiabetesPrediction_v0.1.docx
+Low_Level_Design__DiabetesPrediction_v0.1.docx
+Low_Level_Design__FoodRecommendatio_v0.3.pdf
+Diabetes-Prediction\UGV_HLD_2.0v.pdf

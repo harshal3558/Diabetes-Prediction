@@ -8,8 +8,11 @@ from src.DIAP.pipelines.prediction_pipeline import CustomData, PredictPipeline
 application = Flask(__name__)
 app = application
 
+app.route("/hello")
+def hello():
+    return render_template('Welcome to Diabetes Prediction System')
 
-@app.route("/")
+@app.route("/indexing")
 def index():
     return render_template('index.html')
 

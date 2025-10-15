@@ -1,19 +1,17 @@
-# FROM  python:3.12-alpine
-# WORKDIR /code
-# ENV FLASK_APP=application.py
-# ENV FLASK_RUN_HOST=0.0.0.0
-# COPY . .
-# RUN pip install -r requirements.txt
-# EXPOSE 5000
-# CMD ["flask","run"]
+FROM python:3.10-slim
 
-
-FROM python:3.12-alpine
 WORKDIR /app
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
-COPY . .
-EXPOSE 5000
-ENV FLASK_APP=application.py
-ENV FLASK_RUN_HOST=0.0.0.0
-CMD ["flask", "run"]
+
+# Copy only requirements first for caching
+COPY requirements.txt /app/requirements.txt
+
+# Upgrade pip and install dependencies (caches this layer unless requirements change)
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+# Now copy the rest of your code
+COPY . /app
+
+EXPOSE 8080
+
+CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
