@@ -94,31 +94,31 @@ class ModelTrainer:
             best_params = params[best_model_name]
 
             # Initialize Dagshub for MLflow tracking
-            # dagshub.init(
-            #     repo_owner="harshal3558",
-            #     repo_name="Diabetes-Prediction",
-            #     mlflow=True
-            # )
-            # mlflow.set_registry_uri("https://dagshub.com/harshal3558/Diabetes-Prediction.mlflow")
+            dagshub.init(
+                repo_owner="harshal3558",
+                repo_name="Diabetes-Prediction",
+                mlflow=True
+            )
+            mlflow.set_registry_uri("https://dagshub.com/harshal3558/Diabetes-Prediction.mlflow")
 
-            # with mlflow.start_run():
-            #     predicted_qualities = best_model.predict(X_test)
+            with mlflow.start_run():
+                predicted_qualities = best_model.predict(X_test)
 
-            #     accuracy, precision, f1 = self.eval_metrics(y_test, predicted_qualities)
+                accuracy, precision, f1 = self.eval_metrics(y_test, predicted_qualities)
 
-            #     mlflow.log_params(best_params)
-            #     mlflow.log_metric("accuracy", accuracy)
-            #     mlflow.log_metric("precision", precision)
-            #     mlflow.log_metric("f1", f1)
+                mlflow.log_params(best_params)
+                mlflow.log_metric("accuracy", accuracy)
+                mlflow.log_metric("precision", precision)
+                mlflow.log_metric("f1", f1)
 
-            #     # Save the model using your utility function
-            #     save_object(
-            #         file_path=self.model_trainer_config.trained_model_file_path,
-            #         obj=best_model
-            #     )
+                # Save the model using your utility function
+                save_object(
+                    file_path=self.model_trainer_config.trained_model_file_path,
+                    obj=best_model
+                )
 
-            #     # Log saved model as an artifact to Dagshub
-            #     mlflow.log_artifact(self.model_trainer_config.trained_model_file_path)
+                # Log saved model as an artifact to Dagshub
+                mlflow.log_artifact(self.model_trainer_config.trained_model_file_path)
 
             if best_model_score < 0.6:
                 raise CustomException("No suitable model found with accuracy > 0.6")

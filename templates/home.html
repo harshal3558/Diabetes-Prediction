@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diabetes Prediction Form</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -28,37 +29,63 @@
             font-size: 16px;
             cursor: pointer;
         }
+
+        /* RESULT ALIGNMENT */
+        .result-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 25px;
+            font-size: 22px;
+            font-weight: bold;
+        }
+        .result-container iframe {
+            width: 230px;
+            height: 40px;
+            border: none;
+        }
     </style>
 </head>
 <body>
-    <h1>Diabetes Prediction</h1>
-    <form action="{{ url_for('predict_datapoint')}}" method="post">
-        <label for="pregnancies">Number of Pregnancies:</label>
-        <input id="pregnancies" name="pregnancies" type="number" min="0" max="20" placeholder="e.g. 3" required>
 
-        <label for="glucose">Glucose Level:</label>
-        <input id="glucose" name="glucose" type="number" min="0" max="300" placeholder="e.g. 120" required>
+<h1>Diabetes Prediction</h1>
 
-        <label for="blood_pressure">Blood Pressure (mm Hg):</label>
-        <input id="blood_pressure" name="blood_pressure" type="number" min="0" max="200" placeholder="e.g. 70" required>
+<form 
+    action="{{ url_for('predict_datapoint') }}" 
+    method="post"
+    target="resultFrame"
+>
+    <label>Number of Pregnancies:</label>
+    <input name="pregnancies" type="number" min="0" max="20" required>
 
-        <label for="skin_thickness">Skin Thickness (mm):</label>
-        <input id="skin_thickness" name="skin_thickness" type="number" min="0" max="100" placeholder="e.g. 20" required>
+    <label>Glucose Level:</label>
+    <input name="glucose" type="number" min="0" max="300" required>
 
-        <label for="insulin">Insulin Level (mu U/ml):</label>
-        <input id="insulin" name="insulin" type="number" min="0" max="900" placeholder="e.g. 85" required>
+    <label>Blood Pressure (mm Hg):</label>
+    <input name="blood_pressure" type="number" min="0" max="200" required>
 
-        <label for="bmi">BMI:</label>
-        <input id="bmi" name="bmi" type="number" step="0.1" min="0" max="70" placeholder="e.g. 33.6" required>
+    <label>Skin Thickness (mm):</label>
+    <input name="skin_thickness" type="number" min="0" max="100" required>
 
-        <label for="diabetes_pedigree_function">Diabetes Pedigree Function Value:</label>
-        <input id="diabetes_pedigree_function" name="diabetes_pedigree_function" type="number" step="0.001" min="0" max="2.5" placeholder="e.g. 0.627" required>
+    <label>Insulin Level:</label>
+    <input name="insulin" type="number" min="0" max="900" required>
 
-        <label for="age">Age:</label>
-        <input id="age" name="age" type="number" min="0" max="120" placeholder="e.g. 45" required>
+    <label>BMI:</label>
+    <input name="bmi" type="number" step="0.1" min="0" max="70" required>
 
-        <button type="submit">Predict</button>
-    </form>
-    <h2>The prediction is {{results}}</h2>
+    <label>Diabetes Pedigree Function:</label>
+    <input name="diabetes_pedigree_function" type="number" step="0.001" min="0" max="2.5" required>
+
+    <label>Age:</label>
+    <input name="age" type="number" min="0" max="120" required>
+
+    <button type="submit">Predict</button>
+</form>
+
+<div class="result-container">
+    <span>Prediction Result:</span>
+    <iframe name="resultFrame"></iframe>
+</div>
+
 </body>
 </html>
