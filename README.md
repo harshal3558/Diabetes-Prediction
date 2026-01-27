@@ -2,6 +2,20 @@
 
 A well-written README.md file is crucial for any project, as it serves as the first point of contact for users and contributors. Here’s what you should include:
 
+### Integrating with Azure
+
+# Container Registry Content
+login server = diabetesprediction.azurecr.io
+
+pass = DAgAGnyG//7u/8yDPR8xLmmRMFyveNc8agsr4jJ+Rn+ACRCxEwIX
+
+# Run from terminal
+
+docker buiild -t diabetesprediction.azurecr.io/mltest:latest .
+docker login testdockerkrish.azurecr.io
+
+
+
 ### Essential Sections for a README.md
 
 - **Project Title**
