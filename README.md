@@ -5,14 +5,14 @@ A well-written README.md file is crucial for any project, as it serves as the fi
 ### Integrating with Azure
 
 # Container Registry Content
-login server = diabetesprediction.azurecr.io
+login server = 
 
-pass = DAgAGnyG//7u/8yDPR8xLmmRMFyveNc8agsr4jJ+Rn+ACRCxEwIX
+pass = 
 
 # Run from terminal
 
-docker buiild -t diabetesprediction.azurecr.io/mltest:latest .
-docker login testdockerkrish.azurecr.io
+<!-- docker buiild -t diabetesprediction.azurecr.io/mltest:latest . -->
+<!-- docker login testdockerkrish.azurecr.io -->
 
 
 
