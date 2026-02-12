@@ -42,3 +42,5 @@ dagshub==0.3.35
 pytest
 
 # # -e .
+
+gunicorn
