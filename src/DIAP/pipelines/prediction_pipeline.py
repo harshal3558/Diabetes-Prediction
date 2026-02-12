@@ -7,38 +7,65 @@ from src.DIAP.utils import load_object
 
 class PredictPipeline:
     def __init__(self):
-        pass
+        try:
+            # ==============================
+            # Find Project Root Dynamically
+            # ==============================
+            current_path = os.path.abspath(__file__)
+
+            # prediction_pipeline.py
+            # -> pipelines
+            # -> DIAP
+            # -> src
+            # -> project root
+            project_root = os.path.abspath(
+                os.path.join(current_path, "../../../../")
+            )
+
+            self.model_path = os.path.join(project_root, "artifacts", "model.pkl")
+            self.preprocessor_path = os.path.join(project_root, "artifacts", "preprocessor.pkl")
+
+            print("Project Root:", project_root)
+            print("Model Path:", self.model_path)
+            print("Preprocessor Path:", self.preprocessor_path)
+
+            # ==============================
+            # Check if files exist
+            # ==============================
+            if not os.path.exists(self.model_path):
+                raise FileNotFoundError(f"Model file not found at {self.model_path}")
+
+            if not os.path.exists(self.preprocessor_path):
+                raise FileNotFoundError(f"Preprocessor file not found at {self.preprocessor_path}")
+
+            # ==============================
+            # Load Model & Preprocessor
+            # ==============================
+            print("Loading model and preprocessor...")
+            self.model = load_object(self.model_path)
+            self.preprocessor = load_object(self.preprocessor_path)
+            print("Model and Preprocessor Loaded Successfully")
+
+        except Exception as e:
+            raise CustomException(e, sys)
 
     def predict(self, features):
         try:
-            # Absolute path inside Docker
-            base_path = os.getcwd()
+            print("Starting prediction...")
 
-            model_path = os.path.join(base_path, "artifacts", "model.pkl")
-            preprocessor_path = os.path.join(base_path, "artifacts", "preprocessor.pkl")
+            data_scaled = self.preprocessor.transform(features)
+            preds = self.model.predict(data_scaled)
 
-            print("Current Working Directory:", base_path)
-            print("Model Path:", model_path)
-            print("Preprocessor Path:", preprocessor_path)
-            print("Before Loading")
-
-            model = load_object(file_path=model_path)
-            preprocessor = load_object(file_path=preprocessor_path)
-
-            print("After Loading")
-
-            data_scaled = preprocessor.transform(features)
-            preds = model.predict(data_scaled)
-
+            print("Prediction completed.")
             return preds
 
         except Exception as e:
-            print("ERROR:", str(e))
             raise CustomException(e, sys)
 
 
-import pandas as pd
-import sys
+# ======================================================
+# Custom Data Class
+# ======================================================
 
 class CustomData:
     def __init__(
@@ -73,6 +100,8 @@ class CustomData:
                 "DiabetesPedigreeFunction": [self.diabetes_pedigree_function],
                 "Age": [self.age],
             }
+
             return pd.DataFrame(custom_data_input_dict)
+
         except Exception as e:
-            raise Exception(f"Error creating DataFrame: {e}") from e
+            raise CustomException(e, sys)
