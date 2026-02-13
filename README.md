@@ -101,14 +101,7 @@ dvc pull
 ## 🎥 Demo
 
 ### App Running Video
-> *[Insert Link to Your App Running Video Here]*
 
-### Screenshots
-| Home Page | Prediction Result |
-|-----------|-------------------|
-| *[Add Screenshot]* | *[Add Screenshot]* |
-
----
 
 ## 🚀 Getting Started
 
