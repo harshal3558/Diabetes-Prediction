@@ -1,151 +1,226 @@
-## Diabetes Prediction
+# 🏥 Diabetes Prediction System
 
-A well-written README.md file is crucial for any project, as it serves as the first point of contact for users and contributors. Here’s what you should include:
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)
+![Flask](https://img.shields.io/badge/Flask-3.0.3-black?logo=flask&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Enabled-2496ED?logo=docker&logoColor=white)
+![Azure](https://img.shields.io/badge/Azure-Web%20App-0078D4?logo=microsoftazure&logoColor=white)
+![DVC](https://img.shields.io/badge/DVC-Data%20Version%20Control-945DD6?logo=dvc&logoColor=white)
+![Git](https://img.shields.io/badge/Git-2.47-F05032?logo=git&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
+A comprehensive Machine Learning Web Application designed to predict the likelihood of diabetes in patients based on diagnostic measures. This project leverages advanced ML algorithms and is fully containerized and deployed using **Azure Container Registry (ACR)** and **Azure Web App**.
 
-### Essential Sections for a README.md
+---
 
-- **Project Title**
-  - Diabetes Prediction using Traditional and Advanced ML Algorithms
+## 📋 Table of Contents
+- [About the Project](#-about-the-project)
+- [Key Features](#-key-features)
+- [Tech Stack](#-tech-stack)
+- [Project Architecture](#-project-architecture)
+- [Data Versioning](#-data-versioning)
+- [Demo](#-demo)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Local Installation](#local-installation)
+  - [Running with Docker](#running-with-docker)
+- [Deployment on Azure](#-deployment-on-azure)
+- [API Endpoints](#-api-endpoints)
+- [Contributing](#-contributing)
+- [Contact](#-contact)
 
-- **Project Description**
-  - Predicts diabetes status of individuals based on health metrics using a combination of classical (e.g., logistic regression, SVM) and advanced (e.g., XGBoost, LightGBM) machine learning models. Designed to empower early detection and awareness through tested data-driven methods.
+---
 
-- **Table of Contents** (Optional)
-  - Navigation aid for larger projects (e.g., Overview, Installation, Usage, Model Explanation).
+## 📖 About the Project
 
-- **Installation Instructions**
-  - Download or clone from GitHub.
-  - Create a virtual environment: `conda create --prefix denv python=3.12`
-  - Activate environment: `conda activate .\denv`
-  - Install dependencies: `pip install -r requirements.txt`
+The **Diabetes Prediction System** utilizes a robust machine learning pipeline to analyze health metrics (such as Glucose levels, BMI, Age, etc.) and provide an instant prediction on whether a patient is diabetic.
 
-- **Usage**
-  - Provide clear instructions or code snippets for running the model or web interface. For example:
+The system is built with a modular architecture, ensuring scalability and maintainability. It includes data ingestion, transformation, model training, and a user-friendly web interface powered by Flask.
 
-    ```bash
-    python main.py
-  
-    ```
-    Or, for a web app:
-  
-    ```bash
-    streamlit run app.py
-    ```
-  - Include input examples or screenshots to help users understand how to interact with the application.
+---
 
-- **Requirements/Dependencies**
-  - List of required libraries (as you provided). Minimal descriptions help clarify each library’s purpose:
-    - NumPy: Numerical computations and array handling.
-    - pandas: Data manipulation and tabular analysis.
-    - scikit-learn: Standard ML algorithms and utilities.
-    - matplotlib: Basic visualization.
-    - seaborn: Statistical visualization built on matplotlib.
-    - xgboost: Optimized gradient boosting algorithm.
-    - lightgbm: High-performance gradient boosting.
-    - statsmodels: Advanced statistical modeling.
-    - python-dotenv: Loads environment variables from `.env`.
-    - pymysql: MySQL database client.
-    - mysql-connector-python: Official MySQL connector.
+## ✨ Key Features
+- **Accurate Predictions**: Uses ensemble learning techniques (XGBoost, LightGBM, CatBoost) for high accuracy.
+- **Web Interface**: Simple and intuitive UI for entering patient data.
+- **RESTful API**: Exposes endpoints for programmatic access to predictions.
+- **Data Versioning**: Utilizes **DVC** to track and manage datasets and model artifacts.
+- **Containerized**: Fully Dockerized for consistent environments across development and production.
+- **Cloud Native**: Optimized for deployment on Azure cloud infrastructure.
 
-    - Dagshub
-    - MySQL
+---
 
-- **Configuration**
-  - Mention any environment variables, API keys, database setup, or configuration files required before running the project.
+## 🛠 Tech Stack
 
-- **Contributing**
-  - Guidelines for issue reporting, feature requests, and pull requests (optional but recommended).
+| Category | Technologies |
+|----------|--------------|
+| **Backend** | Python, Flask, Gunicorn |
+| **Machine Learning** | Scikit-learn, XGBoost, LightGBM, CatBoost, Pandas, NumPy |
+| **Frontend** | HTML5, CSS3, Jinja2 Templates |
+| **Database** | MySQL |
+| **Version Control** | Git, DVC (Data Version Control) |
+| **DevOps & Cloud** | Docker, Azure Container Registry (ACR), Azure Web App, GitHub Actions (CI/CD) |
+| **Tracking** | MLflow, DagsHub |
 
-- **Maintainers and Credits**
-  - List project maintainers, mentors, and contributors.
-  - Acknowledge datasets, libraries, or frameworks used (e.g., Pima Indians dataset, UCI Diabetes dataset).
+---
 
-- **License**
-  - Clarifies usage, modification, and distribution rights (e.g., MIT License).
+## 📂 Project Architecture
 
-- **Contact/Support**
-  - For queries or suggestions: harshal3558@gmail.com
+```
+Diabetes-Prediction/
+├── .github/workflows/    # CI/CD Pipelines
+├── artifacts/            # Trained models and preprocessors
+├── notebook/             # Jupyter notebooks for experimentation
+├── src/                  # Source code for the ML pipeline
+│   └── DIAP/             # Main package
+│       ├── components/   # Data ingestion, transformation, training
+│       ├── pipelines/    # Training and Prediction pipelines
+│       └── utils.py      # Utility functions
+├── templates/            # HTML templates for the Web App
+├── application.py        # Main Flask application entry point
+├── Dockerfile            # Docker configuration
+├── requirements.txt      # Project dependencies
+└── ...
+```
 
-- **Links**
-  - Provide demo/deployment links or references to related docs or publications.
+---
 
-### Additional/Optional Sections
+## 💾 Data Versioning
 
-- **Motivation**
-  - State the motivation: e.g., early prediction of diabetes can save lives, project demonstrates real-world deployment and interpretability in ML.
+This project uses **DVC (Data Version Control)** to manage datasets and machine learning models. DVC helps in tracking changes in data and artifacts just like Git tracks code.
 
-- **Features**
-  - List notable features (multiple algorithms, web app interface, model explainability with SHAP and permutation importance, customizable data inputs).[2]
+**Key benefits used in this project:**
+- **Reproducibility**: Ensures that models are trained on specific versions of data.
+- **Storage Efficiency**: Large files are stored remotely (e.g., S3, Azure Blob, GDrive) and only pointers (*.dvc files) are committed to Git.
 
-- **Challenges & Future Work**
-  - Mention any data or modeling challenges and outline potential future enhancements (e.g., mobile app, federated learning, model improvement, broader datasets).[4]
+To pull the latest data and models:
+```bash
+dvc pull
+```
 
-- **Badges**
-  - Show project status, code coverage, and license (use shields.io).
+---
 
-- **Screenshots/GIFs/Images**
-  - Insert visuals such as prediction UI, graphs, or model explainability charts.
+## 🎥 Demo
 
+### App Running Video
+> *[Insert Link to Your App Running Video Here]*
 
-Cicd : - github\workflows
+### Screenshots
+| Home Page | Prediction Result |
+|-----------|-------------------|
+| *[Add Screenshot]* | *[Add Screenshot]* |
 
-name: CI/CD for Dockerized Flask ML App
+---
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+## 🚀 Getting Started
 
-jobs:
-  test:
-    name: Test Python Application
-    runs-on: ubuntu-latest
+### Prerequisites
+- Python 3.10+
+- Git
+- Docker (optional, for containerization)
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+### Local Installation
 
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.9"
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/harshal3558/Diabetes-Prediction.git
+   cd Diabetes-Prediction
+   ```
 
-    - name: Set PYTHONPATH
-      run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
+2. **Create a Virtual Environment**
+   ```bash
+   conda create -p denv python=3.10 -y
+   conda activate ./denv
+   # OR using venv
+   python -m venv denv
+   source denv/bin/activate  # On Windows: denv\Scripts\activate
+   ```
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install -r requirements.txt
+3. **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-    - name: Run tests
-      run: |
-        python -m pytest -v
+4. **Run the Application**
+   ```bash
+   python application.py
+   ```
+   Access the app at `http://127.0.0.1:5000`
 
-  docker:
-    name: Build & Push Docker Image
-    needs: test
-    runs-on: ubuntu-latest
+### Running with Docker
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+1. **Build the Docker Image**
+   ```bash
+   docker build -t diabetes-prediction-app .
+   ```
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+2. **Run the Container**
+   ```bash
+   docker run -p 5000:5000 diabetes-prediction-app
+   ```
+   Access the app at `http://localhost:5000`
 
-    - name: Login to DockerHub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+---
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        file: Dockerfile
-        push: true
-        tags: ${{ secrets.DOCKER_USERNAME }}/diabetes-ml-flask-app:latest
+## ☁ Deployment on Azure
+
+This application is designed to be deployed using **Azure Container Registry (ACR)** and **Azure Web App for Containers**.
+
+### Steps to Deploy:
+
+1. **Push Image to Azure Container Registry (ACR)**
+   ```bash
+   # Login to Azure
+   az login
+   
+   # Login to ACR
+   az acr login --name <your-registry-name>
+   
+   # Tag the image
+   docker tag diabetes-prediction-app <your-registry-name>.azurecr.io/diabetes-app:v1
+   
+   # Push to ACR
+   docker push <your-registry-name>.azurecr.io/diabetes-app:v1
+   ```
+
+2. **Deploy to Azure Web App**
+   - Go to Azure Portal -> Create a resource -> **Web App**.
+   - Select **Docker Container** as the publish method.
+   - Choose **Azure Container Registry** as the image source.
+   - Select the registry, image, and tag you just pushed.
+   - Set the startup command (if needed): `gunicorn --bind 0.0.0.0:8000 application:app` (Azure Web Apps default to port 8000 or 80 inside the container, map accordingly).
+
+---
+
+## 🔌 API Endpoints
+
+- **`GET /indexing`**: Renders the index page.
+- **`GET /predictdata`**: Renders the input form.
+- **`POST /predictdata`**: Handles form submission and returns the prediction result.
+
+**Input Parameters:**
+- `pregnancies` (int)
+- `glucose` (int)
+- `blood_pressure` (int)
+- `skin_thickness` (int)
+- `insulin` (int)
+- `bmi` (float)
+- `diabetes_pedigree_function` (float)
+- `age` (int)
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the project.
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a Pull Request.
+
+---
+
+## 📩 Contact
+
+**Harshal** - [harshal3558@gmail.com](mailto:harshal3558@gmail.com)
+
+Project Link: [https://github.com/harshal3558/Diabetes-Prediction](https://github.com/harshal3558/Diabetes-Prediction)

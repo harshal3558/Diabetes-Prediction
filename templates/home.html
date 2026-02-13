@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,17 +13,20 @@
             margin: auto;
             padding: 20px;
         }
+
         label {
             display: block;
             margin-top: 15px;
             font-weight: bold;
         }
+
         input {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
         }
+
         button {
             margin-top: 20px;
             padding: 10px 15px;
@@ -39,53 +43,68 @@
             font-size: 22px;
             font-weight: bold;
         }
+
         .result-container iframe {
             width: 230px;
             height: 40px;
             border: none;
         }
+
+        .example {
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+            margin-top: 3px;
+        }
     </style>
 </head>
+
 <body>
 
-<h1>Diabetes Prediction</h1>
+    <h1>Diabetes Prediction</h1>
 
-<form 
-    action="{{ url_for('predict_datapoint') }}" 
-    method="post"
-    target="resultFrame"
->
-    <label>Number of Pregnancies:</label>
-    <input name="pregnancies" type="number" min="0" max="20" required>
+    <form action="{{ url_for('predict_datapoint') }}" method="post" target="resultFrame">
+        <label>Number of Pregnancies:</label>
+        <input name="pregnancies" type="number" min="0" max="20" required placeholder="e.g., 6">
+        <!-- <div class="example">Example: 6 (typical for women)</div> -->
 
-    <label>Glucose Level:</label>
-    <input name="glucose" type="number" min="0" max="300" required>
+        <label>Glucose Level:</label>
+        <input name="glucose" type="number" min="0" max="300" required placeholder="e.g., 148">
+        <!-- <div class="example">Example: 148 mg/dL (normal: <126, prediabetes: 126-199)</div> -->
 
-    <label>Blood Pressure (mm Hg):</label>
-    <input name="blood_pressure" type="number" min="0" max="200" required>
+        <label>Blood Pressure (mm Hg):</label>
+        <input name="blood_pressure" type="number" min="0" max="200" required placeholder="e.g., 72">
+        <!-- <div class="example">Example: 72 (normal: <120 /80)</div> -->
 
-    <label>Skin Thickness (mm):</label>
-    <input name="skin_thickness" type="number" min="0" max="100" required>
+        <label>Skin Thickness (mm):</label>
+        <input name="skin_thickness" type="number" min="0" max="100" required placeholder="e.g., 35">
+        <!-- <div class="example">Example: 35 mm (triceps skin fold thickness)</div> -->
 
-    <label>Insulin Level:</label>
-    <input name="insulin" type="number" min="0" max="900" required>
+        <label>Insulin Level:</label>
+        <input name="insulin" type="number" min="0" max="900" required placeholder="e.g., 84">
+        <!-- <div class="example">Example: 84 mu U/ml (normal fasting: 2-25)</div> -->
 
-    <label>BMI:</label>
-    <input name="bmi" type="number" step="0.1" min="0" max="70" required>
+        <label>BMI:</label>
+        <input name="bmi" type="number" step="0.1" min="0" max="70" required placeholder="e.g., 33.6">
+        <!-- <div class="example">Example: 33.6 (obese: ≥30)</div> -->
 
-    <label>Diabetes Pedigree Function:</label>
-    <input name="diabetes_pedigree_function" type="number" step="0.001" min="0" max="2.5" required>
+        <label>Diabetes Pedigree Function:</label>
+        <input name="diabetes_pedigree_function" type="number" step="0.001" min="0" max="2.5" required
+            placeholder="e.g., 0.627">
+        <!-- <div class="example">Example: 0.627 (genetic risk score, higher = more risk)</div> -->
 
-    <label>Age:</label>
-    <input name="age" type="number" min="0" max="120" required>
+        <label>Age:</label>
+        <input name="age" type="number" min="0" max="120" required placeholder="e.g., 50">
+        <!-- <div class="example">Example: 50 years</div> -->
 
-    <button type="submit">Predict</button>
-</form>
+        <button type="submit">Predict</button>
+    </form>
 
-<div class="result-container">
-    <span>Prediction Result:</span>
-    <iframe name="resultFrame"></iframe>
-</div>
+    <div class="result-container">
+        <span>Prediction Result:</span>
+        <iframe name="resultFrame"></iframe>
+    </div>
 
 </body>
+
 </html>
