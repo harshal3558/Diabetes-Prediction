@@ -1,110 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diabetes Prediction Form</title>
-
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', Arial, sans-serif;
+            background: linear-gradient(135deg, hsl(210, 30%, 95%), hsl(220, 30%, 98%));
             max-width: 600px;
             margin: auto;
             padding: 20px;
+            color: #333;
         }
-
+        h1 {
+            text-align: center;
+            font-weight: 600;
+            color: hsl(210, 40%, 25%);
+        }
         label {
             display: block;
             margin-top: 15px;
-            font-weight: bold;
+            font-weight: 600;
         }
-
         input {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
-
         button {
             margin-top: 20px;
             padding: 10px 15px;
             font-size: 16px;
-            cursor: pointer;
-        }
-
-        /* RESULT ALIGNMENT */
-        .result-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-top: 25px;
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .result-container iframe {
-            width: 230px;
-            height: 40px;
+            background: hsl(210, 60%, 55%);
+            color: white;
             border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s ease;
         }
-
-        .example {
-            font-size: 14px;
-            color: #666;
-            font-style: italic;
-            margin-top: 3px;
+        button:hover {
+            background: hsl(210, 60%, 45%);
+        }
+        .result-container {
+            margin-top: 25px;
+            font-size: 1.2rem;
+            font-weight: 600;
         }
     </style>
 </head>
-
 <body>
-
     <h1>Diabetes Prediction</h1>
-
-    <form action="{{ url_for('predict_datapoint') }}" method="post" target="resultFrame">
+    <form id="predict-form" action="{{ url_for('predict_datapoint') }}" method="post" onsubmit="return false;">
         <label>Number of Pregnancies:</label>
         <input name="pregnancies" type="number" min="0" max="20" required placeholder="e.g., 6">
-        <!-- <div class="example">Example: 6 (typical for women)</div> -->
 
         <label>Glucose Level:</label>
         <input name="glucose" type="number" min="0" max="300" required placeholder="e.g., 148">
-        <!-- <div class="example">Example: 148 mg/dL (normal: <126, prediabetes: 126-199)</div> -->
 
         <label>Blood Pressure (mm Hg):</label>
         <input name="blood_pressure" type="number" min="0" max="200" required placeholder="e.g., 72">
-        <!-- <div class="example">Example: 72 (normal: <120 /80)</div> -->
 
         <label>Skin Thickness (mm):</label>
         <input name="skin_thickness" type="number" min="0" max="100" required placeholder="e.g., 35">
-        <!-- <div class="example">Example: 35 mm (triceps skin fold thickness)</div> -->
 
         <label>Insulin Level:</label>
         <input name="insulin" type="number" min="0" max="900" required placeholder="e.g., 84">
-        <!-- <div class="example">Example: 84 mu U/ml (normal fasting: 2-25)</div> -->
 
         <label>BMI:</label>
         <input name="bmi" type="number" step="0.1" min="0" max="70" required placeholder="e.g., 33.6">
-        <!-- <div class="example">Example: 33.6 (obese: ≥30)</div> -->
 
         <label>Diabetes Pedigree Function:</label>
-        <input name="diabetes_pedigree_function" type="number" step="0.001" min="0" max="2.5" required
-            placeholder="e.g., 0.627">
-        <!-- <div class="example">Example: 0.627 (genetic risk score, higher = more risk)</div> -->
+        <input name="diabetes_pedigree_function" type="number" step="0.001" min="0" max="2.5" required placeholder="e.g., 0.627">
 
         <label>Age:</label>
         <input name="age" type="number" min="0" max="120" required placeholder="e.g., 50">
-        <!-- <div class="example">Example: 50 years</div> -->
 
-        <button type="submit">Predict</button>
+        <button type="button" id="predict-btn">Predict</button>
     </form>
-
     <div class="result-container">
-        <span>Prediction Result:</span>
-        <iframe name="resultFrame"></iframe>
+        <span id="result-text">Prediction Result: —</span>
     </div>
 
-</body>
+    <script>
+    console.log('Prediction script loaded');
+    const form = document.getElementById('predict-form');
+    const btn = document.getElementById('predict-btn');
+    const resultSpan = document.getElementById('result-text');
 
+    // Ensure the form never submits by default (extra safety)
+    if (form) {
+        form.addEventListener('submit', function(e) { e.preventDefault(); console.log('Form submit prevented'); });
+    } else {
+        console.error('Predict form not found');
+    }
+
+    if (!btn) {
+        console.error('Predict button not found');
+    } else {
+        btn.addEventListener('click', async function () {
+            console.log('Predict button clicked');
+            const data = new URLSearchParams(new FormData(form));
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: data
+                });
+                if (!response.ok) {
+                    const err = await response.json();
+                    resultSpan.textContent = 'Error: ' + (err.error || response.statusText);
+                    resultSpan.style.color = 'red';
+                    return;
+                }
+                const json = await response.json();
+                if (json.error) {
+                    resultSpan.textContent = 'Error: ' + json.error;
+                    resultSpan.style.color = 'red';
+                } else {
+                    resultSpan.textContent = json.label;
+                    resultSpan.style.color = json.colour;
+                }
+            } catch (err) {
+                resultSpan.textContent = 'Error: ' + err.message;
+                resultSpan.style.color = 'red';
+            }
+        });
+    }
+    </script>
+</body>
 </html>

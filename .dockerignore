@@ -13,6 +13,8 @@ env/
 venv/
 .venv/
 dev/
+denv/
+.denv/
 
 # =========================
 # Git & version control

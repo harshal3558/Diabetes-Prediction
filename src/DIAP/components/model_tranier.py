@@ -25,6 +25,7 @@ from sklearn.metrics import (
     f1_score,
     confusion_matrix,
 )
+from sklearn.metrics import roc_auc_score, recall_score
 
 from src.DIAP.logger import logging
 from src.DIAP.exception import CustomException
@@ -43,8 +44,10 @@ class ModelTrainer:
     def eval_metrics(self, actual, pred):
         accuracy = accuracy_score(actual, pred)
         precision = precision_score(actual, pred)
+        recall = recall_score(actual, pred)
         f1 = f1_score(actual, pred)
-        return accuracy, precision, f1
+        roc_auc = roc_auc_score(actual, pred)
+        return accuracy, precision, recall, f1, roc_auc
 
     def initiate_model_trainer(self, train_array, test_array):
         try:
@@ -94,31 +97,36 @@ class ModelTrainer:
             best_params = params[best_model_name]
 
             # Initialize Dagshub for MLflow tracking
-            dagshub.init(
-                repo_owner="harshal3558",
-                repo_name="Diabetes-Prediction",
-                mlflow=True
-            )
-            mlflow.set_registry_uri("https://dagshub.com/harshal3558/Diabetes-Prediction.mlflow")
-
-            with mlflow.start_run():
-                predicted_qualities = best_model.predict(X_test)
-
-                accuracy, precision, f1 = self.eval_metrics(y_test, predicted_qualities)
-
-                mlflow.log_params(best_params)
-                mlflow.log_metric("accuracy", accuracy)
-                mlflow.log_metric("precision", precision)
-                mlflow.log_metric("f1", f1)
-
-                # Save the model using your utility function
-                save_object(
-                    file_path=self.model_trainer_config.trained_model_file_path,
-                    obj=best_model
+            try:
+                dagshub.init(
+                    repo_owner="harshal3558",
+                    repo_name="Diabetes-Prediction",
+                    mlflow=True
                 )
+                # mlflow.set_registry_uri("https://dagshub.com/harshal3558/Diabetes-Prediction.mlflow")
 
-                # Log saved model as an artifact to Dagshub
-                mlflow.log_artifact(self.model_trainer_config.trained_model_file_path)
+                with mlflow.start_run():
+                    predicted_qualities = best_model.predict(X_test)
+
+                    accuracy, precision, recall, f1, roc_auc = self.eval_metrics(y_test, predicted_qualities)
+
+                    mlflow.log_params(best_params)
+                    mlflow.log_metric("accuracy", accuracy)
+                    mlflow.log_metric("precision", precision)
+                    mlflow.log_metric("recall", recall)
+                    mlflow.log_metric("f1", f1)
+                    mlflow.log_metric("roc_auc", roc_auc)
+
+                    # Log saved model as an artifact to Dagshub
+                    mlflow.log_artifact(self.model_trainer_config.trained_model_file_path)
+            except Exception as e:
+                logging.warning(f"MLflow/Dagshub initialization failed: {str(e)}. Continuing with local saving.")
+
+            # Save the model locally using your utility function
+            save_object(
+                file_path=self.model_trainer_config.trained_model_file_path,
+                obj=best_model
+            )
 
             if best_model_score < 0.6:
                 raise CustomException("No suitable model found with accuracy > 0.6")

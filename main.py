@@ -33,5 +33,9 @@ if __name__ == "__main__":
 
 
     except Exception as e:
-        logging.info("Custom Exception")
-        raise CustomException(e,sys)
+        # logging.info("Custom Exception")
+        # raise CustomException(e,sys)
+        import traceback
+        logging.error(f"Error occurred: {str(e)}")
+        traceback.print_exc()
+        raise CustomException(e, sys)
