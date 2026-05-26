@@ -4,8 +4,8 @@ from src.DIAP.components.data_ingestion import DataIngestion
 from src.DIAP.components.data_ingestion import DataIngestionConfig
 from src.DIAP.components.data_transformation import DataTransformation
 from src.DIAP.components.data_transformation import DataTransformationConfig
-from src.DIAP.components.model_tranier import ModelTrainerConfig
-from src.DIAP.components.model_tranier import ModelTrainer
+from src.DIAP.components.model_trainer import ModelTrainerConfig
+from src.DIAP.components.model_trainer import ModelTrainer
 
 import sys
 

@@ -53,6 +53,11 @@ class PredictPipeline:
         try:
             print("Starting prediction...")
 
+            # Replace zero values with NaN for columns with implausible zero values so they get imputed properly
+            import numpy as np
+            columns_with_zero = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
+            features[columns_with_zero] = features[columns_with_zero].replace(0, np.nan)
+
             data_scaled = self.preprocessor.transform(features)
             preds = self.model.predict(data_scaled)
 

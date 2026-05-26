@@ -18,6 +18,9 @@ from sklearn.ensemble import RandomForestClassifier
 # from xgboost import xgb
 # import lightgbm as LGBMClassifier
 
+from dotenv import load_dotenv
+load_dotenv()
+
 from sklearn.metrics import (
     classification_report,
     accuracy_score,
@@ -34,6 +37,13 @@ from src.DIAP.utils import save_object, evaluate_models
 
 @dataclass
 class ModelTrainerConfig:
+    """Configuration for model training artifacts.
+
+    Attributes
+    ----------
+    trained_model_file_path: str
+        Path to save the trained model.
+    """
     trained_model_file_path = os.path.join("artifacts", "model.pkl")
 
 
@@ -91,19 +101,28 @@ class ModelTrainer:
             ]
             best_model = models[best_model_name]
 
-            print("This is the best model:")
-            print(best_model_name)
+            logging.info("This is the best model: %s", best_model_name)
 
             best_params = params[best_model_name]
 
-            # Initialize Dagshub for MLflow tracking
+            # Save the model locally using your utility function first so that it exists when logging artifacts
+            save_object(
+                file_path=self.model_trainer_config.trained_model_file_path,
+                obj=best_model
+            )
+
+            # Load Dagshub credentials from environment variables (fallback to defaults)
+            repo_owner = os.getenv('DAGSHUB_REPO_OWNER', 'harshal3558')
+            repo_name = os.getenv('DAGSHUB_REPO_NAME', 'Diabetes-Prediction')
+    
+            # Initialize Dagshub for MLflow tracking using env vars
             try:
                 dagshub.init(
-                    repo_owner="harshal3558",
-                    repo_name="Diabetes-Prediction",
+                    repo_owner=repo_owner,
+                    repo_name=repo_name,
                     mlflow=True
                 )
-                # mlflow.set_registry_uri("https://dagshub.com/harshal3558/Diabetes-Prediction.mlflow")
+            # mlflow.set_registry_uri("https://dagshub.com/{repo_owner}/{repo_name}.mlflow")
 
                 with mlflow.start_run():
                     predicted_qualities = best_model.predict(X_test)
@@ -120,13 +139,7 @@ class ModelTrainer:
                     # Log saved model as an artifact to Dagshub
                     mlflow.log_artifact(self.model_trainer_config.trained_model_file_path)
             except Exception as e:
-                logging.warning(f"MLflow/Dagshub initialization failed: {str(e)}. Continuing with local saving.")
-
-            # Save the model locally using your utility function
-            save_object(
-                file_path=self.model_trainer_config.trained_model_file_path,
-                obj=best_model
-            )
+                logging.warning(f"MLflow/Dagshub initialization failed: {str(e)}.")
 
             if best_model_score < 0.6:
                 raise CustomException("No suitable model found with accuracy > 0.6")

@@ -81,6 +81,11 @@ class DataTransformation:
             input_feature_test_df=test_df.drop(columns=[target_column_name],axis=1)
             target_feature_test_df=test_df[target_column_name]
 
+            logging.info("Replacing zero values with NaN for columns with implausible zero values")
+            columns_with_zero = ['Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI']
+            input_feature_train_df[columns_with_zero] = input_feature_train_df[columns_with_zero].replace(0, np.nan)
+            input_feature_test_df[columns_with_zero] = input_feature_test_df[columns_with_zero].replace(0, np.nan)
+
             logging.info("Applying Preprocessing on training and test dataframe")
 
             input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
