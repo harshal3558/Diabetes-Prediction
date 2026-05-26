@@ -32,7 +32,10 @@ from sklearn.metrics import roc_auc_score, recall_score
 
 from src.DIAP.logger import logging
 from src.DIAP.exception import CustomException
-from src.DIAP.utils import save_object, evaluate_models
+
+import numpy as np
+from src.DIAP.utils import evaluate_models, save_object
+np.random.seed(42)  # Global reproducibility seed
 
 
 @dataclass
