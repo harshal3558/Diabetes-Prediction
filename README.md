@@ -34,6 +34,15 @@ graph TD
 -   **Advanced Experiment Tracking**: Integrated with **MLflow** and **Dagshub** for logging metrics, parameters, and model artifacts.
 -   **Hybrid Data Ingestion**: Supports both local CSV files and remote **MySQL** databases.
 -   **Automated Model Selection**: Evaluates multiple algorithms (Random Forest, SVC, KNN, etc.) and selects the top performer via `GridSearchCV`.
+-   **Health‑Check Endpoint**: `/health` returns service status for quick monitoring.
+-   **Environment‑Driven Configuration**: All thresholds, DB credentials, and Dagshub settings are loaded from a `.env` file using `python-dotenv`.
+-   **Reproducibility Seed**: Global `np.random.seed(42)` guarantees deterministic runs.
+-   **Full Containerization**: Docker-ready for consistent cross-platform execution.
+-   **Cloud Native**: Optimized for **Azure Web App for Containers** with automated CI/CD readiness.
+-   **Data Versioning**: Managed via **DVC** to ensure data reproducibility and efficient storage.
+-   **Advanced Experiment Tracking**: Integrated with **MLflow** and **Dagshub** for logging metrics, parameters, and model artifacts.
+-   **Hybrid Data Ingestion**: Supports both local CSV files and remote **MySQL** databases.
+-   **Automated Model Selection**: Evaluates multiple algorithms (Random Forest, SVC, KNN, etc.) and selects the top performer via `GridSearchCV`.
 -   **Full Containerization**: Docker-ready for consistent cross-platform execution.
 -   **Cloud Native**: Optimized for **Azure Web App for Containers** with automated CI/CD readiness.
 -   **Data Versioning**: Managed via **DVC** to ensure data reproducibility and efficient storage.
