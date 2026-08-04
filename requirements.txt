@@ -44,3 +44,4 @@ pytest
 # # -e .
 
 gunicorn
+setuptools
